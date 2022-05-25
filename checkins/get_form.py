@@ -19,7 +19,7 @@ form_service = discovery.build('forms', 'v1', http=creds.authorize(
 # Request body for creating a form
 NEW_FORM = {
     "info": {
-        "title": "Quickstart form",
+        "title": "RLOGGING 전용 정규런 신청"
     }
 }
 

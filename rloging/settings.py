@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'checkins',
     # Other apps
-    "phonenumber_field",
 ]
 
 MIDDLEWARE = [

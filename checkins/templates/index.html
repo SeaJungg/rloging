@@ -13,8 +13,8 @@
             <a href = "{% url 'get_qr' context.member_id %}"> 내 QRCODE 만들기</a><br>
             <a href = "{% url 'logout' %}">로그아웃</a>
         {% else %}
-            <a href = './siginin' > 로그인하기 </a><br>
-            <a href = './signup'> 가입하기</a><br>
+            <a href = "{% url 'siginin' %}"> 로그인하기 </a><br>
+            <a href = "{% url 'signup' %}"> 가입하기</a><br>
         {% endif %}
     </div>
 </body>
