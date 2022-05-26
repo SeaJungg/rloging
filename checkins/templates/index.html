@@ -10,10 +10,12 @@
     <div>
         {% csrf_token %}
         {% if user.is_authenticated %}
+            <h3> 안녕 {{ context.realname }} </h3>
+            <a href = "{% url 'create_session' %}"> 세션 만들기</a><br>
             <a href = "{% url 'get_qr' context.member_id %}"> 내 QRCODE 만들기</a><br>
             <a href = "{% url 'logout' %}">로그아웃</a>
         {% else %}
-            <a href = "{% url 'siginin' %}"> 로그인하기 </a><br>
+            <a href = "{% url 'signin' %}"> 로그인하기 </a><br>
             <a href = "{% url 'signup' %}"> 가입하기</a><br>
         {% endif %}
     </div>

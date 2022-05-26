@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import Http404
-from .models import User
+from .models import User, Sessions, SessionHistories
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
@@ -10,40 +10,59 @@ import time
 import base64
 import string
 import random
+now = time.time()
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
    return ''.join(random.choice(chars) for _ in range(size))
 
 def index(request):
-    print(request.user)
-    if (request.user) :
-        conn_user = request.user
-        user_info = User.objects.get(username=conn_user)
+    if request.user.is_authenticated : 
+        user_info = User.objects.get(username=request.user)
+        # upcomming_session = SessionHistories.objects.filter(member_id = request.user.member_id).order_by('-launch_date')
+        print(user_info)
         context = {
-            'nickname' : conn_user.nickname,
-            'member_id' : conn_user.member_id
+            'username' : request.user.username,
+            'realname' : request.user.realname,
+            'member_id' : request.user.member_id,
+            # 'upcomming_session' : { 
+            #     'id' : upcomming_session.session_id,
+            #     'name' : upcomming_session.name
+            # }
         }
         return render(request, 'index.html', {'context' : context})
     else:
-        print(conn_user)
         return render(request, 'index.html')
 
 def signin(request):
-    return render(request, 'signin.html')
+    print('로그인')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('index')
+        else:
+            return render(request, 'signin.html', {'error': 'username or password is incorrect.'})
+    else:
+        return render(request, 'signin.html')
 
 def signup(request):
+    print('회원가입')
     if request.method == 'POST':
         if request.POST['auth_code1'] == request.POST['auth_code2']:
             user = User.objects.create_user(
-                username =  request.POST['username'],
-                nickname = request.POST['username'] + str(request.POST['phone_number'])[3:7],
+                realname =  request.POST['realname'],
+                username = request.POST['realname'] + str(request.POST['phone_number'])[3:7],
                 phone_number = request.POST['phone_number'],
+                password = request.POST['auth_code2'],
                 auth_code = request.POST['auth_code2']
             )
             auth.login(request, user)
             return redirect('/')
-        return render(request, 'signup.html')
-    return render(request, 'signup.html')
+        else :
+            return render(request, 'signup.html')
+    return render(request, 'signup.html', {'error': '비밀번호와 비밀번호 확인이 일치하지 않습니다.'})
 
 def get_qr(request, member_id):
     member_info = User.objects.get(pk=member_id)
@@ -60,5 +79,20 @@ def get_qr(request, member_id):
 
 def logout(request):
     auth.logout(request)
-    redirect('index')
-    return render(request, 'index.html')
+    return redirect('/')
+
+def create_session(request):
+    insert_session(str(request.user.member_id), '테스트세션', '')
+    return redirect('/')
+
+
+def insert_session(member_id, session_name, launch_date):
+    session_info = Sessions()
+    session_info.name  = session_name
+    session_info.launch_date = launch_date
+    session_info.save()
+
+    session_history = SessionHistories()
+    session_history.member_id = member_id
+    session_history.session_id = Sessions.get(id = session_info.id).session_id
+    return
