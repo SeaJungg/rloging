@@ -1,3 +1,4 @@
+from copyreg import constructor
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import Http404
@@ -11,27 +12,48 @@ import base64
 import string
 import random
 now = time.time()
+import cv2
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
    return ''.join(random.choice(chars) for _ in range(size))
 
 def index(request):
     if request.user.is_authenticated : 
-        user_info = User.objects.get(username=request.user)
-        # upcomming_session = SessionHistories.objects.filter(member_id = request.user.member_id).order_by('-launch_date')
-        print(user_info)
+        upcomming_session_id = SessionHistories.objects.filter(member_id = request.user.member_id).order_by('-create_date').values_list('session_id', flat=True)[:1]
+        upcomming_session_info = Sessions.objects.filter(session_id__in = list(upcomming_session_id))
+        #upcomming_sessions = SessionHistories.objects.filter(member_id = request.user.member_id).order_by('-create_date').values_list('session_id', flat=True)
+        #upcomming_session_info = Sessions.objects.filter(session_id__in = list(upcomming_sessions))
+        upcomming_session_members = User.objects.filter(member_id__in = list(SessionHistories.objects.filter(session_id__in = list(upcomming_session_id)).values_list('member_id', flat=True)))
+        print(upcomming_session_members.values())
         context = {
             'username' : request.user.username,
             'realname' : request.user.realname,
             'member_id' : request.user.member_id,
-            # 'upcomming_session' : { 
-            #     'id' : upcomming_session.session_id,
-            #     'name' : upcomming_session.name
-            # }
+            'upcomming_session' : upcomming_session_info,
+            'upcomming_session_members' : upcomming_session_members
         }
         return render(request, 'index.html', {'context' : context})
     else:
         return render(request, 'index.html')
+
+def camera(request, session_id):
+    return render(request, 'camera.html', {'session_id': session_id})
+
+def read_qr(request):
+    img = cv2.imread('51388737-53b6-4656-b828-ebe2d7a725381653641692.png')
+    det = cv2.QRCodeDetector()
+    val, pts, st_code = det.detectAndDecode(img)
+    print(val)
+    return render(request, 'readqr.html')
+
+
+def checkin(request, session_id, member_id):
+    session_history = SessionHistories()
+    session_history.member_id = member_id
+    session_history.session_id = session_id
+    session_history.save()
+    return redirect('/')
+
 
 def signin(request):
     print('로그인')
@@ -53,7 +75,7 @@ def signup(request):
         if request.POST['auth_code1'] == request.POST['auth_code2']:
             user = User.objects.create_user(
                 realname =  request.POST['realname'],
-                username = request.POST['realname'] + str(request.POST['phone_number'])[3:7],
+                username = request.POST['realname'] + str(request.POST['phone_number'])[7:11],
                 phone_number = request.POST['phone_number'],
                 password = request.POST['auth_code2'],
                 auth_code = request.POST['auth_code2']
@@ -64,12 +86,11 @@ def signup(request):
             return render(request, 'signup.html')
     return render(request, 'signup.html', {'error': '비밀번호와 비밀번호 확인이 일치하지 않습니다.'})
 
-def get_qr(request, member_id):
-    member_info = User.objects.get(pk=member_id)
+def get_qr(request):
     now = time.time()
-    qr_text = 'https://search.naver.com/search.naver?query=' + member_info.username + str(now)
+    qr_text = str(request.user.member_id) + 'iwannagohome' + str(now)[:10]
     myqr_image = qrcode.make(qr_text)
-    myqr_image_path = member_info.username + str(now) +'.png'
+    myqr_image_path = str(request.user.member_id) + str(now)[:10] +'.png'
     myqr_image.save(myqr_image_path)
 
     with open(myqr_image_path, "rb") as image_file:
@@ -82,7 +103,8 @@ def logout(request):
     return redirect('/')
 
 def create_session(request):
-    insert_session(str(request.user.member_id), '테스트세션', '')
+    print(request.user.member_id)
+    insert_session(str(request.user.member_id), '테스트세션', '2022-06-01 10:00:00')
     return redirect('/')
 
 
@@ -92,7 +114,11 @@ def insert_session(member_id, session_name, launch_date):
     session_info.launch_date = launch_date
     session_info.save()
 
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',session_info.session_id)
+
     session_history = SessionHistories()
     session_history.member_id = member_id
-    session_history.session_id = Sessions.get(id = session_info.id).session_id
+    session_history.session_id = session_info.session_id
+    session_history.save()
+
     return
