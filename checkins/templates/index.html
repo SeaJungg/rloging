@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel='stylesheet' type="text/css" href="{% static 'home.css' %}"/> -->
+</head>
+<body>
+    <div class='myBox'>
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+            <h3 class='myLogo'> RLOGGER {{ context.realname }} </h3>
+            <a href = "{% url 'session_create' %}"> 세션 만들기</a><br>
+            <a href = "{% url 'qr_get' %}"> 내 QRCODE 만들기</a><br>
+            <a href = "{% url 'logout' %}">로그아웃</a>
+            <br><br><br>
+            {% for i in context.upcomming_session %}
+                <a href="{% url 'session_home' i.session_id %}"> {{i.name}} </a>
+                <br>
+            {% endfor %}
+            <!-- <br><br><br>
+            <h3>출석체크 완료</h3>
+            {% for member in context.upcomming_session_members %}
+                {{member.username}}<br><br><br>
+            {% endfor %} -->
+        {% else %}
+            <a href = "{% url 'signin' %}"> 로그인하기 </a><br>
+            <a href = "{% url 'signup' %}"> 가입하기</a><br>
+        {% endif %}
+    </div>
+</body>
+</html>

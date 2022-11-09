@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel='stylesheet' type="text/css" href="{% static 'home.css' %}"/> -->
+</head>
+<body>
+    <div class='myBox'>
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+            <br><br><br>
+            <h1>{{ context.session.launch_date}} </h1>
+            <h1>{{ context.session.name}} </h1>
+            <form action="{% url 'session_apply' context.session.id %}" method="POST">
+                {% csrf_token %}
+                {% if context.session.is_available %}
+                    <button type="submit">참가신청하기</button>
+                {% else %}
+                    <h3>참가신청 마감</h3>
+                {% endif %}
+            </form>
+            <br><br><br>
+            <h3>참가신청 완료</h3>
+            {% for member in context.applicants %}
+                {{member.username}}<br><br><br>
+            {% endfor %}
+            <a href="{% url 'session_camera' context.session.id %}"> 나는 오늘 웰커밍 서포터다 (클릭) </a><br>
+            <a href="{% url 'index' %}"> 처음으로 돌아가기</a>
+        {% else %}
+            <h1>잘못된 요청입니다.</h1>
+        {% endif %}
+    </div>
+</body>
+</html>
