@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Menu, Segment, Sidebar, Icon } from "semantic-ui-react";
+import useSession from "../hooks/useSession";
 
 function Layout({ children }) {
     const [isOpen, setIsOpen] = useState(false);
+    const { userName, onLogout } = useSession();
 
     return (
         <Sidebar.Pushable>
@@ -15,13 +17,13 @@ function Layout({ children }) {
                 vertical
                 visible={isOpen}
             >
-                <Link to="/home">
-                    <Menu.Item>Home</Menu.Item>
-                </Link>
-                <Link to="/home">
-                    <Menu.Item>Create Session</Menu.Item>
-                </Link>
-                <Menu.Item>Logout</Menu.Item>
+                <Menu.Item as={Link} to="/">
+                    Home
+                </Menu.Item>
+                <Menu.Item as={Link} to="/">
+                    Create Session
+                </Menu.Item>
+                <Menu.Item onClick={onLogout}>Logout</Menu.Item>
             </Sidebar>
 
             <Sidebar.Pusher dimmed={isOpen}>
@@ -41,7 +43,7 @@ function Layout({ children }) {
                                 <Icon name="sidebar" />
                             </Menu.Item>
                             <Menu.Item position="right">
-                                <div>Hello Yujin</div>
+                                <div>Hello {userName}</div>
                             </Menu.Item>
                         </Menu>
                     </Container>
