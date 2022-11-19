@@ -23,7 +23,6 @@ with open(secret_file) as f:
     secrets = json.loads(f.read())
 
 def get_secret(setting):
-    """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
     try:
         return secrets[setting]
     except KeyError:
@@ -96,12 +95,8 @@ WSGI_APPLICATION = 'rloging.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': get_secret('DATABASE')
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

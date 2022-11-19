@@ -21,5 +21,8 @@ class SessionHistory(models.Model):
     session_id = models.CharField(max_length=100)
     member_id = models.CharField(max_length=100)
     is_attendance = models.BooleanField(default=0)
+    is_supporter_welcome = models.BooleanField(default=0)
+    is_supporter_dj = models.BooleanField(default=0)
+    is_supporter_car = models.BooleanField(default=0)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now_add=True)
