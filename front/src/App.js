@@ -10,11 +10,15 @@ function App() {
                 <Route path="/login">
                     <Login />
                 </Route>
-                <Route path="/session">
+                <Route path="/home">
+                    <Home />
+                </Route>
+                <Route path="/session/:id">
                     <Session />
                 </Route>
                 <Route path="/">
-                    <Home />
+                    {/* TODO: branch by authentication */}
+                    <Login />
                 </Route>
             </Switch>
         </Router>

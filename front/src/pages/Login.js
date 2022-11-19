@@ -1,49 +1,47 @@
-import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
+import React from "react";
+import { Link } from "react-router-dom";
+import { Button, Header, Segment, Icon } from "semantic-ui-react";
 
-function LoginForm() {
-    return (
-        <Grid
-            textAlign="center"
-            style={{ height: "100vh" }}
-            verticalAlign="middle"
+const LoginPage = () => (
+    <Segment
+        id="home"
+        textAlign="center"
+        style={{
+            minHeight: "100vh",
+            maxWidth: "820px",
+            margin: "0 auto",
+        }}
+    >
+        <Header
+            as="h1"
+            inverted
+            style={{
+                fontSize: "4em",
+                fontWeight: "bolder",
+                fontStyle: "italic",
+                marginBottom: 0,
+                paddingTop: "4em",
+            }}
         >
-            <Grid.Column style={{ maxWidth: 450 }}>
-                <Segment style={{ width: "90%", margin: "0 auto" }}>
-                    <Header as="h2" color="orange" textAlign="center">
-                        Log-in to your account
-                    </Header>
-                    <Form size="large">
-                        <Form.Input
-                            fluid
-                            icon="user"
-                            iconPosition="left"
-                            placeholder="이름+전화번호뒤4자리"
-                        />
-                        <Form.Input
-                            fluid
-                            icon="lock"
-                            iconPosition="left"
-                            placeholder="비밀번호"
-                            type="password"
-                        />
+            <span style={{ color: "#f2711c" }}>R</span>LOG
+        </Header>
+        <Header
+            as="h2"
+            content="RUN Every Thu. 8PM"
+            inverted
+            style={{
+                fontSize: "1.5em",
+                fontWeight: "normal",
+                marginTop: "0.5em",
+            }}
+        />
+        <Link to="/home">
+            <Button color="yellow" size="huge" style={{ color: "black" }}>
+                <Icon name="facebook messenger" />
+                카카오로 로그인하기
+            </Button>
+        </Link>
+    </Segment>
+);
 
-                        <Button color="orange" fluid size="large">
-                            Login
-                        </Button>
-                    </Form>
-                    <a href="/signup">
-                        <Button
-                            fluid
-                            size="large"
-                            style={{ marginTop: "10px" }}
-                        >
-                            Sign Up
-                        </Button>
-                    </a>
-                </Segment>
-            </Grid.Column>
-        </Grid>
-    );
-}
-
-export default LoginForm;
+export default LoginPage;
