@@ -20,7 +20,7 @@ function Layout({ children }) {
                 <Menu.Item as={Link} to="/">
                     Home
                 </Menu.Item>
-                <Menu.Item as={Link} to="/">
+                <Menu.Item as={Link} to="/session/register">
                     Create Session
                 </Menu.Item>
                 <Menu.Item onClick={onLogout}>Logout</Menu.Item>
@@ -47,7 +47,9 @@ function Layout({ children }) {
                             </Menu.Item>
                         </Menu>
                     </Container>
-                    {children}
+                    <div style={{ maxWidth: "80%", margin: "2em auto" }}>
+                        {children}
+                    </div>
                 </Segment>
             </Sidebar.Pusher>
         </Sidebar.Pushable>

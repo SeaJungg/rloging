@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Card, Image, Icon, Segment, Header, List } from "semantic-ui-react";
+import { Card, Image, Icon, Segment, List } from "semantic-ui-react";
+import MainHeader from "../components/MainHeader";
 import { getDateString } from "../utils";
 import Layout from "./Layout";
 
@@ -117,25 +118,12 @@ function Home() {
         setFinishedList(finished);
     }, []);
 
-    const headerStyle = {
-        fontSize: "2em",
-        fontWeight: "bolder",
-        fontStyle: "italic",
-        color: "white",
-    };
-
     return (
         <Layout>
-            <div style={{ maxWidth: "80%", margin: "2em auto" }}>
-                <Header as="h1" style={headerStyle}>
-                    Upcoming Sessions
-                </Header>
-                <SessionCards sessions={sessionList} />
-                <Header as="h1" style={headerStyle}>
-                    Last Sessions
-                </Header>
-                <SessionList sessions={finishedList} />
-            </div>
+            <MainHeader content="Upcoming Sessions" />
+            <SessionCards sessions={sessionList} />
+            <MainHeader content="Last Sessions" />
+            <SessionList sessions={finishedList} />
         </Layout>
     );
 }
