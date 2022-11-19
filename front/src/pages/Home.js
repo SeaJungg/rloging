@@ -5,7 +5,7 @@ import MainHeader from "../components/MainHeader";
 import { getDateString } from "../utils";
 import Layout from "./Layout";
 
-const defaultImg = "/background.jpeg";
+const defaultImg = `${process.env.PUBLIC_URL}/background.jpeg`;
 
 const SessionCards = ({ sessions = [] }) => (
     <Card.Group>

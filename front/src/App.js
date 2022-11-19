@@ -8,7 +8,7 @@ import SessionForm from "./pages/SessionForm";
 function App() {
     const { userName } = useSession();
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Switch>
                 <Route path="/session/register">
                     <SessionForm />

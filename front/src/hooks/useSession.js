@@ -11,12 +11,12 @@ function useSession() {
         // TODO: login callback logic
         sessionStorage.setItem("userName", "Tester");
         sessionStorage.setItem("sessionId", "test-id");
-        window.location.href = "/";
+        window.location.href = process.env.PUBLIC_URL;
     };
 
     const onLogout = () => {
         sessionStorage.clear();
-        window.location.href = "/";
+        window.location.href = process.env.PUBLIC_URL;
     };
 
     return { userName, onLogin, onLogout };
