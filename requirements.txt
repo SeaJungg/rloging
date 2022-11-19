@@ -3,10 +3,12 @@ cachetools==5.0.0
 certifi==2021.10.8
 charset-normalizer==2.0.12
 Django==4.0.4
+django-filter==22.1
 django-phone-field==1.8.1
 django-phonenumber-field==6.1.0
 django-phonenumbers==1.0.1
 django-smalluuid==1.2.1
+djangorestframework==3.14.0
 google-api-core==2.7.3
 google-api-python-client==2.47.0
 google-auth==2.6.6

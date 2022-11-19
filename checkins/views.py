@@ -1,3 +1,4 @@
+from urllib import response
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import Http404
@@ -19,6 +20,25 @@ from PIL import Image
 import pytz 
 utc=pytz.UTC
 from pyzbar.pyzbar import decode
+from .serializer import SessionSerializer, SessionHistorySerializer, UserSerializer
+from rest_framework import viewsets
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
+
+class SessionViewSet(viewsets.ModelViewSet):
+    queryset = Session.objects.all()
+    serializer_class = SessionSerializer
+
+class SessionHistoryViewSet(viewsets.ModelViewSet):
+    queryset = SessionHistory.objects.all()
+    serializer_class = SessionHistorySerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
    return ''.join(random.choice(chars) for _ in range(size))
