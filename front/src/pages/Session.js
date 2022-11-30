@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Button, Header, Segment, Statistic } from "semantic-ui-react";
+import {
+    Button,
+    Header,
+    Label,
+    Segment,
+    Statistic,
+    Icon,
+} from "semantic-ui-react";
 import Layout from "./Layout";
 import MainHeader from "../components/MainHeader";
 import { getDateString } from "../utils";
@@ -28,20 +35,25 @@ function Session() {
     return (
         <Layout>
             <MainHeader content={sessionDetail?.name} />
-            <Segment circular color="orange" inverted>
-                <Header as="h2">
-                    <Header.Subheader>장소</Header.Subheader>
-                    {sessionDetail?.place || "미정"}
-                </Header>
-            </Segment>
-            <Segment circular>
-                <Header as="h2">
-                    <Header.Subheader inverted>집결시간</Header.Subheader>
-                    {sessionDetail?.launch_date
-                        ? getDateString(sessionDetail.launch_date)
-                        : "미정"}
-                </Header>
-            </Segment>
+            <Label.Group color="orange" size="big">
+                <Label icon="flag">
+                    <Icon name="flag" />
+                    장소
+                    <Label.Detail>
+                        {sessionDetail?.place || "미정"}
+                    </Label.Detail>
+                </Label>
+                <Label>
+                    <Icon name="clock" />
+                    시간
+                    <Label.Detail>
+                        {sessionDetail?.launch_date
+                            ? getDateString(sessionDetail.launch_date)
+                            : "미정"}
+                    </Label.Detail>
+                </Label>
+            </Label.Group>
+
             <Segment style={{ overflow: "hidden" }}>
                 <Header>참가신청자</Header>
                 <Statistic.Group
@@ -66,6 +78,7 @@ function Session() {
                     disabled={isAttend || attendee >= total}
                     color="orange"
                     floated="right"
+                    size="huge"
                 >
                     {isAttend
                         ? "신청완료"

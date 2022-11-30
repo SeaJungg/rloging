@@ -43,7 +43,9 @@ function Layout({ children }) {
                                 <Icon name="sidebar" />
                             </Menu.Item>
                             <Menu.Item position="right">
-                                <div>Hello {userName}</div>
+                                <div>
+                                    Hello {userName} <Icon name="hand paper" />
+                                </div>
                             </Menu.Item>
                         </Menu>
                     </Container>
