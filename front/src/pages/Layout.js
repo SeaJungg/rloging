@@ -47,7 +47,7 @@ function Layout({ children }) {
                             </Menu.Item>
                         </Menu>
                     </Container>
-                    <div style={{ maxWidth: "80%", margin: "2em auto" }}>
+                    <div style={{ maxWidth: "90%", margin: "2em auto" }}>
                         {children}
                     </div>
                 </Segment>
