@@ -12,6 +12,7 @@ import {
 import Layout from "./Layout";
 import MainHeader from "../components/MainHeader";
 import { getDateString } from "../utils";
+import config from "../config";
 
 function Session() {
     const { id } = useParams();
@@ -22,7 +23,9 @@ function Session() {
 
     const fetchSessionDetail = async (id) => {
         // TODO: modify json format query
-        const res = await axios.get(`/api/v1/session/${id}/?format=json`);
+        const res = await axios.get(
+            `${config.endpoint}/session/${id}/?format=json`
+        );
         setSessionDetail(res.data);
         setAttendee(res.data?.attendee || 0);
         setTotal(res.data?.total_attendee || 0);

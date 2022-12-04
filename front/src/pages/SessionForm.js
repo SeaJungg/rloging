@@ -4,6 +4,7 @@ import Layout from "./Layout";
 import { Form, Button } from "semantic-ui-react";
 import MainHeader from "../components/MainHeader";
 import useForm from "../hooks/useForm";
+import config from "../config";
 
 function SessionForm() {
     const history = useHistory();
@@ -19,7 +20,7 @@ function SessionForm() {
 
     const onSubmit = async (values) => {
         console.log(values);
-        const res = await axios.post("/api/v1/session/", values);
+        const res = await axios.post(`${config.endpoint}/session/`, values);
         if (res.status < 400 && res.data) {
             history.push("/session/" + res.data.session_id);
         } else {

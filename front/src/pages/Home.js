@@ -5,6 +5,7 @@ import { Card, Image, Icon, Segment, List } from "semantic-ui-react";
 import MainHeader from "../components/MainHeader";
 import { getDateString } from "../utils";
 import Layout from "./Layout";
+import config from "../config";
 
 const defaultImg = `${process.env.PUBLIC_URL}/background.jpeg`;
 
@@ -84,7 +85,7 @@ function Home() {
 
     const fetchSessionList = async () => {
         // TODO: modify json format query
-        const res = await axios.get("/api/v1/session/?format=json");
+        const res = await axios.get(`${config.endpoint}/session/?format=json`);
 
         const currentDate = new Date();
         const upcoming = [];
