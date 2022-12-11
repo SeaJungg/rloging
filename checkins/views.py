@@ -20,14 +20,15 @@ from PIL import Image
 import pytz 
 utc=pytz.UTC
 from pyzbar.pyzbar import decode
-from .serializer import SessionSerializer, SessionHistorySerializer, UserSerializer
+from .serializer import SessionSerializer, SessionInfoSerializer, SessionHistorySerializer, UserSerializer
 from rest_framework import viewsets
 # from rest_framework.views import APIView
 # from rest_framework.response import Response
 
 class SessionViewSet(viewsets.ModelViewSet):
     queryset = Session.objects.all()
-    serializer_class = SessionSerializer
+    serializer_class = SessionInfoSerializer
+
 
 class SessionHistoryViewSet(viewsets.ModelViewSet):
     queryset = SessionHistory.objects.all()
@@ -196,9 +197,11 @@ def get_session_info(session_object):
 
 def create_session(member_id, session_name, session_location, launch_date, application_fee):
     session_info = Session()
+    session_info.member_id  = member_id
     session_info.name  = session_name
-    session_info.launch_date = launch_date
     session_info.session_location = session_location
+    session_info.launch_date = launch_date
+    session_info.application_fee = application_fee
     session_info.save()
 
     session_history = SessionHistory()
