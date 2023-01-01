@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Header, Segment, Icon } from "semantic-ui-react";
+import { Button, Segment, Icon, Image } from "semantic-ui-react";
 import useSession from "../hooks/useSession";
 
 function LoginPage() {
@@ -15,27 +15,12 @@ function LoginPage() {
                 margin: "0 auto",
             }}
         >
-            <Header
-                as="h1"
-                inverted
+            <Image
+                src={`${process.env.PUBLIC_URL}/logo/2WH.png`}
                 style={{
-                    fontSize: "4em",
-                    fontWeight: "bolder",
-                    fontStyle: "italic",
-                    marginBottom: 0,
-                    paddingTop: "4em",
-                }}
-            >
-                <span style={{ color: "#f2711c" }}>R</span>LOG
-            </Header>
-            <Header
-                as="h2"
-                content="RUN Every Thu. 8PM"
-                inverted
-                style={{
-                    fontSize: "1.5em",
-                    fontWeight: "normal",
-                    marginTop: "0.5em",
+                    margin: "0 auto",
+                    paddingTop: "calc(40vh - 35%)",
+                    width: "75%",
                 }}
             />
             <Button

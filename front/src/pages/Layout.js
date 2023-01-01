@@ -43,11 +43,13 @@ function Layout({ children }) {
                                 <Icon name="sidebar" />
                             </Menu.Item>
                             <Menu.Item position="right">
-                                <div>Hello {userName}</div>
+                                <div>
+                                    Hello {userName} <Icon name="hand paper" />
+                                </div>
                             </Menu.Item>
                         </Menu>
                     </Container>
-                    <div style={{ maxWidth: "80%", margin: "2em auto" }}>
+                    <div style={{ maxWidth: "90%", margin: "2em auto" }}>
                         {children}
                     </div>
                 </Segment>

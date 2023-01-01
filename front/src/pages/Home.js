@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { Card, Image, Icon, Segment, List } from "semantic-ui-react";
 import MainHeader from "../components/MainHeader";
 import { getDateString } from "../utils";
 import Layout from "./Layout";
+import config from "../config";
 
-const defaultImg = `${process.env.PUBLIC_URL}/background.jpeg`;
+const defaultImg = `${process.env.PUBLIC_URL}/logo/3WH.png`;
 
 const SessionCards = ({ sessions = [] }) => (
     <Card.Group>
@@ -27,6 +29,7 @@ const SessionCards = ({ sessions = [] }) => (
                         height: "40vw",
                         maxHeight: "40vh",
                         overflow: "hidden",
+                        backgroundColor: "#FE8E32",
                     }}
                 />
                 <Card.Content>
@@ -49,7 +52,7 @@ const SessionCards = ({ sessions = [] }) => (
 const SessionList = ({ sessions = [] }) => (
     <Segment>
         <List divided verticalAlign="middle">
-            {sessions.map((session) => (
+            {sessions.map((session, i) => (
                 <List.Item
                     as={Link}
                     to={"/session/" + session.session_id}
@@ -62,6 +65,7 @@ const SessionList = ({ sessions = [] }) => (
                         style={{
                             height: "100px",
                             objectFit: "cover",
+                            backgroundColor: i % 2 ? "#FE8E32" : "#000000",
                         }}
                     />
                     <List.Content>
@@ -81,41 +85,25 @@ function Home() {
     const [sessionList, setSessionList] = useState([]);
     const [finishedList, setFinishedList] = useState([]);
 
-    useEffect(() => {
-        // TODO: change dummy data
-        const res = [
-            {
-                session_id: "3a71fa3c-e800-426d-ab91-8f9332494f09",
-                name: "나의세션",
-                member_id: "정유진4427",
-                launch_date: "2022-11-16T20:36:00+09:00",
-                application_fee: "0",
-                create_date: "2022-11-09T20:36:48.085459+09:00",
-                update_date: "2022-11-09T20:36:48.085481+09:00",
-            },
-            {
-                session_id: "e057e6eb-30a8-49db-8034-2f723f4e5f57",
-                name: "두번째세션",
-                member_id: "정유진4427",
-                launch_date: "2022-11-24T12:35:00+09:00",
-                application_fee: "3000",
-                create_date: "2022-11-19T12:35:54.683618+09:00",
-                update_date: "2022-11-19T12:35:54.683638+09:00",
-            },
-        ];
+    const fetchSessionList = async () => {
+        // TODO: modify json format query
+        const res = await axios.get(`${config.endpoint}/session/?format=json`);
 
         const currentDate = new Date();
-
         const upcoming = [];
         const finished = [];
 
-        res.forEach((session) => {
+        res.data.forEach((session) => {
             session.upcoming = currentDate <= new Date(session.launch_date);
             session.upcoming ? upcoming.push(session) : finished.push(session);
         });
 
         setSessionList(upcoming);
         setFinishedList(finished);
+    };
+
+    useEffect(() => {
+        fetchSessionList();
     }, []);
 
     return (
