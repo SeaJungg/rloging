@@ -7,7 +7,7 @@ import { getDateString } from "../utils";
 import Layout from "./Layout";
 import config from "../config";
 
-const defaultImg = `${process.env.PUBLIC_URL}/background.jpeg`;
+const defaultImg = `${process.env.PUBLIC_URL}/logo/3WH.png`;
 
 const SessionCards = ({ sessions = [] }) => (
     <Card.Group>
@@ -29,6 +29,7 @@ const SessionCards = ({ sessions = [] }) => (
                         height: "40vw",
                         maxHeight: "40vh",
                         overflow: "hidden",
+                        backgroundColor: "#FE8E32",
                     }}
                 />
                 <Card.Content>
@@ -51,7 +52,7 @@ const SessionCards = ({ sessions = [] }) => (
 const SessionList = ({ sessions = [] }) => (
     <Segment>
         <List divided verticalAlign="middle">
-            {sessions.map((session) => (
+            {sessions.map((session, i) => (
                 <List.Item
                     as={Link}
                     to={"/session/" + session.session_id}
@@ -64,6 +65,7 @@ const SessionList = ({ sessions = [] }) => (
                         style={{
                             height: "100px",
                             objectFit: "cover",
+                            backgroundColor: i % 2 ? "#FE8E32" : "#000000",
                         }}
                     />
                     <List.Content>
