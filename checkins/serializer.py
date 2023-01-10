@@ -21,7 +21,7 @@ class SessionHistorySerializer(serializers.ModelSerializer):
 class SessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Session
-        fields = '__all__'
+        fields = ['imageUrl','name','description','location','member_id','launch_date','max_attendee','application_fee']
 
 
 class SessionInfoSerializer(serializers.ModelSerializer):
@@ -30,7 +30,7 @@ class SessionInfoSerializer(serializers.ModelSerializer):
         source='attendee.count', 
         read_only=True
     )
-    attendee = SessionHistorySerializer(many = True)
+    attendee = SessionHistorySerializer(many = True, read_only = True)
     class Meta:
         model = Session
         fields = '__all__'
