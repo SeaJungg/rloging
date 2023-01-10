@@ -7,7 +7,7 @@ import { getDateString } from "../utils";
 import Layout from "./Layout";
 import config from "../config";
 
-const defaultImg = `${process.env.PUBLIC_URL}/logo/3WH.png`;
+const defaultImg = `${process.env.PUBLIC_URL}/img/logo/3WH.png`;
 
 const SessionCards = ({ sessions = [] }) => (
     <Card.Group>

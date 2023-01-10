@@ -16,7 +16,7 @@ function LoginPage() {
             }}
         >
             <Image
-                src={`${process.env.PUBLIC_URL}/logo/2WH.png`}
+                src={`${process.env.PUBLIC_URL}/img/logo/2WH.png`}
                 style={{
                     margin: "0 auto",
                     paddingTop: "calc(40vh - 35%)",
