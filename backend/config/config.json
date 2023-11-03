@@ -1,0 +1,30 @@
+{
+  "development": {
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "HOST": "localhost",
+    "USER": "sea",
+    "PASSWORD": "sea123",
+    "DB": "RLOG_DEV",
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    }
+  },
+  "test": {
+    "username": "sea",
+    "password": "sea123",
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "sea",
+    "password": "sea123",
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

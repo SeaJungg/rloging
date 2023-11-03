@@ -1,0 +1,530 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "rloging",
+    "description": "러닝크루 출석 앱 알로깅 API",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Authorization header using the Bearer scheme. Example: Bearer {token}"
+    }
+  },
+  "paths": {
+    "/sessions": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "session_id": {
+                    "type": "integer"
+                  },
+                  "imageUrl": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "user_id": {
+                    "type": "integer"
+                  },
+                  "application_fee": {
+                    "type": "integer"
+                  },
+                  "launch_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example" : "2023-05-01 10:00:00"
+                  },
+                  "user_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new session",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session",
+            "in": "body",
+            "description": "Session object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "imageUrl": {
+                  "type": "string",
+                  "example": "https://example.com/image1.jpg"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "우중런2"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "This is a sample session."
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Sample Location 1"
+                },
+                "application_fee": {
+                  "type": "integer",
+                  "example": 10000
+                },
+                "launch_date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2023-06-01 10:00:00"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "session_id": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "user_name": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "session_name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "launch_date": {
+                      "type": "string"
+                    },
+                    "application_fee": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total_attendee_count": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "max_attendee_count": {
+                      "type": "string",
+                      "format": "nullable"
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "attendance_at": {
+                            "type": "string",
+                            "format": "nullable"
+                          },
+                          "is_supporter_welcome": {
+                            "type": "boolean"
+                          },
+                          "is_supporter_dj": {
+                            "type": "boolean"
+                          },
+                          "is_supporter_car": {
+                            "type": "boolean"
+                          },
+                          "user_name": {
+                            "type": "string"
+                          },
+                          "user_id": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "supporters_dj": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "attendance_at": {
+                            "type": "string",
+                            "format": "nullable"
+                          },
+                          "is_supporter_welcome": {
+                            "type": "boolean"
+                          },
+                          "is_supporter_dj": {
+                            "type": "boolean"
+                          },
+                          "is_supporter_car": {
+                            "type": "boolean"
+                          },
+                          "user_name": {
+                            "type": "string"
+                          },
+                          "user_id": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "supporters_car": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "supporters_welcome": {
+                      "type": "array",
+                      "items": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/sessions/{session_id}": {
+      "get": {
+        "description": "세션 상세보기",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "code": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "session_id": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "user_name": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "session_name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "location": {
+                      "type": "string"
+                    },
+                    "launch_date": {
+                      "type": "string"
+                    },
+                    "application_fee": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "total_attendee_count": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "max_attendee_count": {
+                      "type": "string",
+                      "format": "nullable"
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "attendance_at": {
+                            "type": "string",
+                            "format": "nullable"
+                          },
+                          "is_supporter_welcome": {
+                            "type": "boolean"
+                          },
+                          "is_supporter_dj": {
+                            "type": "boolean"
+                          },
+                          "is_supporter_car": {
+                            "type": "boolean"
+                          },
+                          "user_name": {
+                            "type": "string"
+                          },
+                          "user_id": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "supporters_dj": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "attendance_at": {
+                            "type": "string",
+                            "format": "nullable"
+                          },
+                          "is_supporter_welcome": {
+                            "type": "boolean"
+                          },
+                          "is_supporter_dj": {
+                            "type": "boolean"
+                          },
+                          "is_supporter_car": {
+                            "type": "boolean"
+                          },
+                          "user_name": {
+                            "type": "string"
+                          },
+                          "user_id": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "supporters_car": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "supporters_welcome": {
+                      "type": "array",
+                      "items": {}
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/sessions/{session_id}/apply": {
+      "post": {
+        "description": "세션 참가신청하기",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/sessions/{session_id}/attendees/{user_id}": {
+      "put": {
+        "description": "특정 세션 출석체크하기 (Authorization user가 해당 세션의 웰커밍 서포터 또는 세션장이어야 합니다.)",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/sessions/{session_id}/supporters/{user_id}/toggle": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/kakao/code": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/signup": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/token": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  }
+}

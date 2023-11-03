@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Example</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <form>
+    <label for="username">이름석자:</label>
+	<input type="text" id="user_name" name="username"><br><br>
+	<label for="phone">폰번호:</label>
+	<input type="text" id="phone" name="phone"><br><br>
+	<input type="text" id="signup_data" name="signup_data"><br><br>
+	<input type="submit" value="Submit">
+    <button type="button" onclick="submitForm()">Submit</button>
+  </form>
+
+  <script>
+    function submitForm() {
+      const user_name = document.getElementById("user_name").value;
+      const phone = document.getElementById("phone").value;
+      const signup_data = JSON.parse(document.getElementById("signup_data").value);
+      const data = { user_name, phone, signup_data : signup_data };
+      axios.post("http://127.0.0.1:3000/signup", data)
+        .then(function (response) {
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+  </script>
+</body>
+</html>
